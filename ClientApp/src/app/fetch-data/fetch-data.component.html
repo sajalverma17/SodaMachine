@@ -1,0 +1,45 @@
+  <div id='machineBody'>
+
+    <div class='left-panel'>
+      <img src="assets/img/logo_white_bg.jpg" >
+    </div>
+
+    <div class='right-panel'>
+
+      <div class="panel-item-container">
+
+      <div class="commandRow">
+      <input type="number" [(ngModel)]="insertedMoney" />  
+      <button class="btn btn-primary" (click)="insert(insertedMoney)">Insert money</button>
+      </div>
+
+      <div class="commandRow">
+        <select [(ngModel)]="selectedSodaId" >
+          <option *ngFor="let soda of sodas" value={{soda.Id}}>
+            {{soda.Name}}
+          </option>
+        </select>
+        <button class="btn btn-primary" (click)="order(selectedSodaId)">Order</button>
+      </div>
+
+      <div class="commandRow">
+        <select [(ngModel)]="selectedSodaIdForSMS">
+          <option *ngFor="let soda of sodas" value={{soda.Id}}>
+            {{soda.Name}}
+          </option>
+        </select>
+        <button class="btn btn-primary" (click)="smsOrder(selectedSodaIdForSMS)">SMS Order</button>
+      </div>
+
+      <div class="commandRow">
+      <button class="btn btn-primary" (click)="recall()">Recall</button>
+      </div>
+      </div>
+      
+    </div>
+
+  </div>
+
+  <soda-footer class="page-footer" availableMoney={{money}} commandResult={{commandResult}}>
+  </soda-footer>
+

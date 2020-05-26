@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,8 +21,10 @@ namespace SodaMachine
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string inMemoryDbName = "SodaMachineInMemoryDb";
+
             //Using the in-memory database
-            services.AddDbContext<SodaMachineDBContext>(opt => opt.UseInMemoryDatabase());
+            services.AddDbContext<SodaMachineDBContext>(opt => opt.UseInMemoryDatabase(inMemoryDbName));
 
             //Get the db context from the services
             var serviceProvide = services.BuildServiceProvider();
@@ -34,10 +35,8 @@ namespace SodaMachine
 
             //Pass DB context to the Controller-injectible DB service
             services.AddScoped<ISodaMachineDbService, SodaMachineDbService>(s => new SodaMachineDbService(dbContext));
-           
 
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -62,14 +61,16 @@ namespace SodaMachine
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            app.UseRouting();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    "default",
+                    "{controller}/{action=Index}/{id?}");
             });
 
+            /*
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
@@ -77,11 +78,13 @@ namespace SodaMachine
 
                 spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
+                // If development - ng serve ClientApp yourself.
+                // if (env.IsDevelopment())
+                // {
+                //    spa.UseAngularCliServer(npmScript: "start");
+                // }
             });
+            */
         }
     }
 }

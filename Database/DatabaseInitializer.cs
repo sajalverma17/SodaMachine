@@ -13,7 +13,7 @@ namespace SodaMachine.Database
                 new Soda { Id = 2, Name = "Sprite", Nr = 3, Price = 10 }, 
                 new Soda { Id = 3, Name = "Fanta", Nr = 3, Price = 5 } };
 
-            var sodaMachine = new Machine { Id = 1, Money = 10, Sodas = sodaInventory };
+            var sodaMachine = new Machine { Id = 1, Money = 20, Sodas = sodaInventory };
 
             dBContext.Add(sodaMachine);
             dBContext.SaveChanges();

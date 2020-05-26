@@ -1,0 +1,30 @@
+name: SodaMachine CI
+
+on:
+  push:
+    branches: [ master ]
+    branches-ignore: wip/*
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build SodaMachine
+    runs-on: {{matrix.os}}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest ]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+        
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    
+    

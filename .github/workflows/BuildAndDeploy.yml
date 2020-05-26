@@ -1,13 +1,11 @@
-name: SodaMachine CI
+name: SodaMachine CI/CD
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [ master ]        
 
 jobs:
-  build:
+  build:    
     name: Build SodaMachine
     runs-on: [ubuntu-latest]
 
@@ -22,5 +20,20 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
+  
+  deploy:
+    name: Heroku Deploy
+    needs: build
+    runs-on: [ubuntu-latest]
+    env:
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}    
+    
+    steps:
+      - name: Heroku login
+        run: heroku login
+      - name: log
+        run: echo 'Heroku login successfull'
+        
+    
     
     

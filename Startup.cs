@@ -37,11 +37,14 @@ namespace SodaMachine
             services.AddScoped<ISodaMachineDbService, SodaMachineDbService>(s => new SodaMachineDbService(dbContext));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
             // In production, the Angular files will be served from this directory
+            /*
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            */
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,7 +63,7 @@ namespace SodaMachine
             
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseSpaStaticFiles();
+            // app.UseSpaStaticFiles();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
@@ -70,7 +73,7 @@ namespace SodaMachine
                     "{controller}/{action=Index}/{id?}");
             });
 
-
+            /*
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
@@ -84,6 +87,7 @@ namespace SodaMachine
                 //    spa.UseAngularCliServer(npmScript: "start");
                 // }
             });
+            */
 
         }
     }

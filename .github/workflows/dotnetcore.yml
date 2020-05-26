@@ -3,7 +3,6 @@ name: SodaMachine CI
 on:
   push:
     branches: [ master ]
-    branches-ignore: wip/*
   pull_request:
     branches: [ master ]
 
